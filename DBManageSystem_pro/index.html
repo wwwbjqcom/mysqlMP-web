@@ -1,0 +1,2078 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MySQLManagePlatform</title>
+    <link rel="shortcut icon" href="dist/img/dbmanagesystem.jpg" type="image/x-icon" />
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+
+    <!-- bootstrap slider -->
+    <link rel="stylesheet" href="plugins/seiyria-bootstrap-slider/css/bootstrap-slider.min.css">
+
+    <!--新增-->
+    <link rel="stylesheet" href="bower_components/sweetalert/sweetalert.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
+
+    <!--chartist-->
+    <link rel="stylesheet" href="bower_components/chatist/chartist.min.css">
+    <!--high charts-->
+    <link rel="stylesheet" href="bower_components/high_charts/highcharts.css">
+    <!--bootstrap-select-->
+    <link rel="stylesheet" href="bower_components/bootstrap-select-1.13.9/dist/css/bootstrap-select.min.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+
+    <style>
+        .table > thead > tr > th {
+            vertical-align: top;
+        }
+
+        .custom_box {
+            position: relative;
+            border-radius: 3px;
+            background: #ffffff;
+            border-top: 0;
+            margin-bottom: 20px;
+            /*margin-top: 25px;*/
+            margin-left: 84px;
+            width: 90%;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.31);
+        }
+
+        .custom_border_top {
+            border-top: 0;
+        }
+
+        .custom_row {
+            /*border-radius: 168px;*/
+            background: #ffffff;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
+            margin-bottom: 30px;
+            margin-left: 15px;
+            margin-right: 15px;
+
+        }
+
+        .hover_control:hover {
+            transform: translateY(-6px);
+            -webkit-transform: translateY(-6px);
+            -moz-transform: translateY(-6px);
+            box-shadow: 0 26px 40px -24px rgba(0, 36, 100, 0.72);
+            /*-webkit-box-shadow: 0 26px 40px -24px rgba(0, 36, 100, .3);*/
+            -webkit-box-shadow: rgba(0, 36, 100, 0.72);
+            -moz-box-shadow: 0 26px 40px -24px rgba(0, 36, 100, 0.72);
+            transition: all .3s ease;
+        }
+
+        .custom_controls {
+            position: absolute;
+        }
+
+        .custom_length {
+            margin-left: 8px;
+        }
+
+        .custom_page {
+            margin-right: 8px;
+        }
+
+        .custom_card_tb_btn {
+            margin-right: 0;
+        }
+
+        th.tabicon {
+            border: 1px solid darkgray;
+        }
+
+        .table tbody tr th {
+            padding: 5px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: 0;
+        }
+
+        .table th {
+            background-color: #e0e0e0;
+            padding: 10px;
+        }
+
+        .maintain_status {
+            background: #d2d6de;
+        }
+
+        .custom_search_differen_data:hover {
+            cursor: pointer;
+            padding: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .custom_user_image {
+
+        }
+
+        .show_username {
+            color: #0a0a0a
+        }
+
+        .show_username:hover {
+            color: #337ab7;
+            cursor: pointer;
+        }
+
+        .hook_id {
+            color: #0a0a0a
+        }
+
+        .caret {
+            margin-top: -27px;
+            float: right;
+            display: inline-block;
+            width: 0;
+            height: 0;
+            margin-left: 2px;
+            vertical-align: middle;
+            border-top: 4px solid;
+            border-right: 4px solid transparent;
+            border-left: 4px solid transparent;
+        }
+
+        md-switch {
+            white-space: nowrap;
+            cursor: pointer;
+            outline: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            height: 30px;
+            line-height: 28px;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            margin-left: 30px;
+        }
+
+        md-switch .md-container {
+            cursor: -webkit-grab;
+            cursor: grab;
+            width: 36px;
+            height: 24px;
+            position: relative;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin-right: 8px;
+            float: left;
+        }
+
+        md-switch:not(.md-dragging) .md-bar, md-switch:not(.md-dragging) .md-thumb {
+            -webkit-transition-delay: .05s;
+            transition-delay: .05s;
+        }
+
+        md-switch:not(.md-dragging) .md-bar, md-switch:not(.md-dragging) .md-thumb, md-switch:not(.md-dragging) .md-thumb-container {
+            -webkit-transition: all .08s linear;
+            transition: all .08s linear;
+            -webkit-transition-property: background-color, -webkit-transform;
+            transition-property: background-color, -webkit-transform;
+            transition-property: transform, background-color;
+            /* transition-property: transform,background-color,-webkit-transform; */
+        }
+
+        md-switch.md-checked .md-thumb-container {
+            -webkit-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
+        }
+
+        checked .md-bar {
+            background-color: rgba(255, 64, 129, 0.5);
+        }
+
+        md-switch .md-bar {
+            left: 1px;
+            width: 34px;
+            top: 5px;
+            height: 14px;
+            border-radius: 8px;
+            position: absolute;
+            /*background-color: rgb(255,64,129);*/
+            background-color: rgba(255, 64, 129, 0.5);
+        }
+
+        /*md-switch .md-bar {*/
+        /*background-color: rgb(158, 158, 158);*/
+        /*}*/
+
+        md-switch .md-thumb-container {
+            top: 2px;
+            left: 0;
+            width: 16px;
+            position: absolute;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            z-index: 1;
+        }
+
+        /*md-switch.md-checked .md-thumb {*/
+        /*background-color: rgb(255,64,129);*/
+        /*}*/
+
+        md-switch .md-thumb, md-switch .md-thumb:before {
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 50%;
+        }
+
+        md-switch .md-thumb {
+            margin: 0;
+            outline: none;
+            height: 20px;
+            width: 20px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
+            background-color: rgb(255, 64, 129);
+        }
+
+
+        /*md-switch .md-thumb {*/
+        /*background-color: rgb(250, 250, 250);*/
+        /*}*/
+
+        /*md-switch.md-checked .md-ink-ripple {*/
+        /*color: rgb(255, 64, 129);*/
+        /*}*/
+        /*md-switch .md-ink-ripple {*/
+        /*color: rgb(158, 158, 158);*/
+        /*}*/
+
+        md-switch .md-thumb .md-ripple-container {
+            position: absolute;
+            display: block;
+            width: auto;
+            height: auto;
+            left: -20px;
+            top: -20px;
+            right: -20px;
+            bottom: -20px;
+        }
+
+        .md-ripple-container {
+            pointer-events: none;
+            position: absolute;
+            overflow: hidden;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-transition: all .55s cubic-bezier(.25, .8, .25, 1);
+            transition: all .55s cubic-bezier(.25, .8, .25, 1);
+        }
+
+        .qps_count {
+            font-size: 51px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .queries_count {
+            font-size: 51px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .custom_selectpiker_bg {
+            background-color: white;
+            border-radius: 0;
+            box-shadow: none;
+            border-color: #d2d6de;
+        }
+        .custom_dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: -358px;
+            z-index: 1000;
+            display: none;
+            /*float: left;*/
+            width: 531px;
+            padding: 5px 0;
+            margin: 2px 0 0;
+            font-size: 14px;
+            text-align: left;
+            list-style: none;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ccc;
+            border: 1px solid rgba(0,0,0,.15);
+            border-radius: 4px;
+            -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+            box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        }
+        .custom_active{}
+        .to_actual_range_button:hover{
+            cursor: pointer;
+            background: #d2d6de;
+        }
+        .from_actual_range_button:hover{
+            cursor: pointer;
+            background: #d2d6de;
+        }
+
+        .time_select_quick{
+            width: 260px;
+            height: 61px;
+            /*border: 1px solid red;*/
+            position: relative;
+            left: 260px;
+            top: -141px;
+        }
+
+        .custom_dropdown-menu a{
+            color: rgba(51, 51, 51, 0.82);
+        }
+        .custom_dropdown-menu a:hover{
+            color: #337ab7;
+            cursor: pointer;
+        }
+
+        .time_select_quick ul{
+            margin: 0;
+            margin-left: 4px;
+            padding: 0;
+        }
+        .time_select_quick ul li{
+            list-style: none;
+        }
+
+        .time_select_quick_hours{
+            width: 260px;
+            height: 0px;
+            /*border: 1px solid red;*/
+            position: relative;
+            left: 370px;
+            top: -183px;
+        }
+        .time_select_quick_hours ul{
+            margin: 0;
+            margin-left: 21px;
+            padding: 0;
+        }
+        .time_select_quick_hours ul li{
+            list-style: none;
+        }
+
+        .custom_green_chartist_color {
+            stroke: #00800087;
+        }
+
+        .custom_yellow_chartist_color {
+            stroke: yellow;
+        }
+
+        .custom_red_chartist_color {
+            stroke: #ff000087;
+        }
+
+        .custom_white_chartist_color {
+            stroke: #fff;
+        }
+
+        .custom_one_label {
+            font-size: 18px;
+        }
+
+        .custom_two_label {
+            font-size: 18px;
+        }
+
+
+        .highcharts-legend-item span{
+            width: 1500px;
+        }
+        .high_chart_legend_custom{
+            width: 700px;
+        }
+        .high_chart_legend_custom_left{
+            width: 250px;
+        }
+
+
+        .custom_th_length1 {
+            width: 30px;
+        }
+
+        .custom_th_length2 {
+            width: 30px;
+        }
+
+        .custom_th_length3 {
+            width: 90px;
+        }
+
+        .custom_th_length4 {
+            width: 110px;
+        }
+
+        .custom_th_length5 {
+            width: 380px;
+        }
+
+        .custom_th_length6 {
+            width: 380px;
+        }
+
+        .custom_th_length7 {
+            width: 110px;
+        }
+
+
+    </style>
+
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="main_content">
+        <!-- Content Header (Page header) -->
+        <section class="content-header" style="height:80px; background: rgb(245, 245, 245);">
+            <div class="pull-left">
+                <img src="dist/img/dbmanagesystem.jpg" style="width: 30px;float: left;margin-right: 10px;margin-top: 5px;">
+                <h3 class="pull-left" style="margin-top: 10px;">
+                    MySQLManagePlatform
+                    <small></small>
+                </h3>
+            </div>
+            <div class="pull-right">
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <span class="hidden-xs show_username current_username"></span>
+                            </a>
+                            <b class="caret"></b>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header" data-stopPropagation="true">
+                                    <img src="dist/img/user2-160x160.jpg" class="img-circle">
+                                    <p>
+                                        <small class="show_username"></small>
+                                        <small class="hook_id"></small>
+                                    </p>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer" data-stopPropagation="true">
+                                    <div class="pull-left">
+                                        <a class="btn btn-default btn-flat change_password" data-toggle="modal" data-target="#modal_change_password">修改密码</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a class="btn btn-default btn-flat sign_out">退出登录</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Main content -->
+        <section class="content" style="padding-top: 0">
+
+            <div class="row" style="border: 1px solid #ddd;border-bottom: 0;">
+                <div class="col-md-12">
+                    <!-- Custom Tabs -->
+                    <div class="nav-tabs-custom" style="box-shadow:0 0">
+                        <ul class="nav nav-tabs">
+                            <li class="active dbha" style="margin-right: 29px"><a href="#dbha"
+                                                                                  data-toggle="tab">DBHA</a></li>
+                            <li style="margin-right: 29px" class="different_data"><a href="#different_data"
+                                                                                     data-toggle="tab" class="tab2">DifferenceData</a>
+                            </li>
+                            <li style="margin-right: 29px" class="route_info"><a href="#route_info" data-toggle="tab">RouteInfo</a>
+                            </li>
+                            <li style="margin-right: 29px" class="dbha_log">
+                                <a href="#dbha_log" data-toggle="tab">DBHALog</a>
+                            </li>
+                            <li style="margin-right: 29px" class="monitorcharts">
+                                <a href="#monitorcharts" data-toggle="tab">MonitorCharts</a>
+                            </li>
+                        </ul>
+                        <div>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="dbha">
+                                    <div class="row" style="margin-top: 33px;margin-bottom: 33px;">
+                                        <div class="col-md-5" style="margin-left: 101px;">
+                                            <div class="dropdown add_node_custom pull-left">
+                                                <button class="btn btn-default dropdown-toggle btn-sm"
+                                                        type="button"
+                                                        style='color: rgb(33,33,33)'
+                                                        id="add_node" data-toggle="dropdown"
+                                                        aria-haspopup="true"
+                                                        aria-expanded="true">
+                                                    <i class="fa fa-bars"></i>
+                                                </button>
+                                                <ul class="dropdown-menu"
+                                                    aria-labelledby="add_node"
+                                                    style='left: -45px;top: -8px;font-size: 13px'>
+                                                    <li><a style='color: rgb(33,33,33)' class="add_node" data-toggle="modal" data-target="#modal_add_node"><i
+                                                            class='btn btn-default btn-xs fa fa-plus'
+                                                            title='添加节点'></i>添加节点</a></li>
+                                                </ul>
+                                            </div>
+                                            <!--<button type="button" class="btn btn-default"><i class="fa fa-bars"></i>-->
+                                            </button>
+                                            <select class="form-control pull-left cluster_name_list"
+                                                    style="width: 136px;"></select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a class="btn btn-default toggle_dbha">
+                                                <i class="fa fa-table"></i>
+                                            </a>
+                                            <a class="btn btn-default refresh_data">
+                                                <i class="fa fa-refresh"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="dbha_tb_list">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="box box-default">
+                                                    <div class="box-header" style="background: #ddd">
+                                                        <h3 class="box-title">Monitor Status</h3>
+                                                    </div>
+
+                                                    <div class="box-footer no-padding monitor_status">
+                                                        <ul class="nav nav-pills nav-stacked">
+                                                            <li><a>Manager Status <span
+                                                                    class="pull-right label label-success"
+                                                                    style="margin-right: 150px;"></span></a>
+                                                            </li>
+                                                            <li><a>Cluster Name <span
+                                                                    class="pull-right label label-default"
+                                                                    style="margin-right: 150px;"></span></a>
+                                                            </li>
+                                                            <li><a>Failover Count <span class="pull-right"
+                                                                                        style="margin-right: 150px;"></span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- /.footer -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="box box-default">
+                                                    <div class="box-header" style="background: #ddd">
+                                                        <h3 class="box-title">Cluster Info</h3>
+                                                    </div>
+
+                                                    <div class="box-footer no-padding cluster_info">
+                                                        <ul class="nav nav-pills nav-stacked">
+                                                            <li><a>Topology <span class="pull-right label label-info"
+                                                                                  style="margin-right: 150px;"></span></a>
+                                                            </li>
+                                                            <li><a>Cluster State <span
+                                                                    class="pull-right label label-success"
+                                                                    style="margin-right: 150px;"></span></a>
+                                                            </li>
+                                                            <li><a>Difference Data <span
+                                                                    class="pull-right label label-danger"
+                                                                    style="margin-right: 150px;"></span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- /.footer -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="box box-default">
+                                                    <div class="box-header" style="background: #ddd">
+                                                        <h3 class="box-title">Cluster Switch Info</h3>
+                                                    </div>
+
+                                                    <div class="box-footer no-padding cluster_switch_info">
+                                                        <ul class="nav nav-pills nav-stacked">
+                                                            <li><a>Switch Total <span class="pull-right "
+                                                                                      style="margin-right: 150px;"></span></a>
+                                                            </li>
+                                                            <li><a>Last Switch Time <span class="pull-right "
+                                                                                          style="margin-right: 150px;"></span></a>
+                                                            </li>
+                                                            <li><a>Last Switch State <span
+                                                                    class="pull-right label label-danger"
+                                                                    style="margin-right: 150px;"></span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- /.footer -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table id="dbha_tb" class="table no-padding"
+                                               style="table-layout:fixed;word-break:break-all;font-size: 13px;">
+                                            <thead style="background: #ddd">
+                                            <tr>
+                                                <th style="width: 26px">Action</th>
+                                                <th style="width: 35px">Role</th>
+                                                <th style="width: 600px">Executed GTID Set</th>
+                                                <th style="width: 64px">Host</th>
+                                                <!--<th style="width: 50px;display: none">ClusterName</th>-->
+                                                <th style="width: 30px">DBPort</th>
+                                                <th style="width: 9px">On Lin</th>
+                                                <th style="width: 13px">SQL Thr</th>
+                                                <th style="width: 9px">IO Thr</th>
+                                                <th style="width: 9px">RD Onl</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                        <div class="row" style="margin-left: -2px;margin-right: -2px; margin-top: 36px">
+                                            <div class="box">
+                                                <div class="box-header" style="background: #ddd">
+                                                    <h3 class="box-title">Monitor Charts</h3>
+                                                </div>
+                                                <div class="box-body" style="margin-top: 25px">
+                                                    <div class="col-lg-3 col-xs-6">
+                                                        <!-- small box -->
+                                                        <div class="small-box" style="background-color: #0073b7ba; color: white">
+                                                            <a class="small-box-footer">CURRENT QPS</a>
+                                                            <div class="inner">
+                                                                <div class="qps_count"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- ./col -->
+                                                    <div class="col-lg-3 col-xs-6">
+                                                        <div>
+                                                            <div style="text-align: center; margin-bottom: 22px;font-size: 18px">
+                                                                Thread Running
+                                                            </div>
+                                                            <div>
+                                                                <div class="thread_running"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- ./col -->
+                                                    <div class="col-lg-3 col-xs-6">
+                                                        <div class="small-box bg-olive">
+                                                            <a class="small-box-footer">SLOW QUERIES</a>
+                                                            <div class="inner">
+                                                                <div class="queries_count"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- ./col -->
+                                                    <div class="col-lg-3 col-xs-6">
+                                                        <div>
+                                                            <div style="text-align: center; margin-bottom: 22px;font-size: 18px">
+                                                                Thread Connected
+                                                            </div>
+                                                            <div>
+                                                                <div class="thread_connected"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="box-footer no-padding monitor_status">
+
+                                                </div>
+                                                <!-- /.footer -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="dbha_detail" style="display: none">
+                                        <div class="row dbha_row">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="different_data">
+                                    <div class="row">
+                                        <!-- /.col -->
+                                        <div class="col-md-12">
+                                            <div class="box box-primary" style="border-top:0;">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title"></h3>
+                                                    <!-- /.box-tools -->
+                                                </div>
+                                                <!-- /.box-header -->
+                                                <div class="box-body no-padding">
+                                                    <div class="mailbox-controls custom_controls">
+                                                        <!-- Check all button -->
+                                                        <div class="btn-group">
+                                                            <button type="button"
+                                                                    class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                    class="fa fa-square-o"></i></button>
+                                                            <!--<button type="button" class="btn btn-default btn-sm delete_difference_data" title="删除"><i-->
+                                                            <!--class="fa fa-trash-o"></i>-->
+                                                            <!--</button>-->
+                                                            <button type="button"
+                                                                    class="btn btn-default btn-sm append_difference_data"
+                                                                    title="追加"><i
+                                                                    class="fa fa-puzzle-piece"></i>
+                                                            </button>
+                                                            <button type="button"
+                                                                    class="btn btn-default btn-sm mark_difference_data"
+                                                                    title="标记"><i
+                                                                    class="fa fa-thumb-tack"></i>
+                                                            </button>
+                                                            <!--<button type="button" class="btn btn-default btn-sm" title="回滚"><i-->
+                                                            <!--class="fa  fa-exchange"></i>-->
+                                                            <!--</button>-->
+                                                        </div>
+                                                        <!-- /.btn-group -->
+
+                                                        <!-- /.pull-right -->
+
+                                                    </div>
+                                                    <div class="table-responsive mailbox-messages click_rep_difference_data_tb">
+
+                                                    </div>
+                                                    <!-- /.mail-box-messages -->
+                                                </div>
+                                                <!-- /.box-body -->
+
+                                            </div>
+                                            <!-- /. box -->
+                                        </div>
+                                        <!-- /.col -->
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="route_info">
+                                    <div class="row" style="margin-top: 33px;margin-bottom: 33px;">
+                                        <div class="col-md-5" style="margin-left: 101px;">
+                                            <div class="dropdown add_node_custom pull-left">
+                                                <button class="btn btn-default dropdown-toggle btn-sm"
+                                                        type="button"
+                                                        style='color: rgb(33,33,33)'
+                                                        data-toggle="dropdown"
+                                                        aria-haspopup="true"
+                                                        aria-expanded="true">
+                                                    <i class="fa fa-bars"></i>
+                                                </button>
+                                                <ul class="dropdown-menu"
+                                                    aria-labelledby="modal_replication"
+                                                    style='left: -45px;top: -8px;font-size: 13px'>
+                                                    <li><a style='color: rgb(33,33,33)'
+                                                           data-toggle="modal" data-target="#modal_replication_delay_config" class="check_replication_val"><i
+                                                            class='btn btn-default btn-xs fa fa-eercast'
+                                                            title='延迟检测配置'></i>延迟检测配置</a></li>
+                                                </ul>
+                                            </div>
+                                            <select class="form-control pull-left route_cluster_name_list"
+                                                    style="width: 136px;"></select>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 add_write_card">
+                                        </div>
+                                        <div class="col-md-8 add_route_read_tb">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="dbha_log">
+                                    <div class="dbha_log_tb_div"></div>
+                                </div>
+                                <div class="tab-pane" id="monitorcharts">
+
+                                    <div class="row">
+                                        <div >
+                                            <div class="pull-right" style="margin-right: 40px;margin-top: 25px;">
+                                                <div>
+                                                    <button class="btn btn-default btn-flat monitor_charts_refresh">
+                                                        <i class="fa fa-refresh"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="dropdown pull-right" style="margin-right: 10px;margin-top: 25px">
+                                                <div class="btn btn-default btn-flat time_click_button" type="button" id="time_select" >
+                                                    <div class="fa fa-clock-o 2x time_show_titie" title="Last 5 minutes">&nbsp;&nbsp;<div class="time_button_text pull-right" >Last 5 minutes</div></div>
+                                                </div>
+                                                <ul class="custom_dropdown-menu">
+                                                    <div style="width: 260px;height: 146px;">
+                                                        <div class="form-group" style="margin-left: 30px;margin-right: 30px">
+                                                            <p>From:</p>
+                                                            <div class="input-group date">
+                                                                <div class="input-group-addon from_actual_range_button">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </div>
+                                                                <input type="text" class="form-control pull-right frmo_actual_datepicker" value="">
+
+                                                            </div>
+                                                            <div class="from_actual_range" style="display: none"></div>
+                                                            <!-- /.input group -->
+                                                        </div>
+                                                        <div class="form-group" style="margin-left: 30px;margin-right: 30px">
+                                                            <p>To:</p>
+                                                            <div class="input-group date">
+                                                                <div class="input-group-addon to_actual_range_button">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </div>
+                                                                <input type="text" class="form-control pull-right to_actual_datepicker" value="">
+
+                                                            </div>
+                                                            <div class="to_actual_range" style="display: none"></div>
+                                                            <!-- /.input group -->
+                                                        </div>
+                                                        <div class="pull-right" style="margin-right: 30px ">
+                                                            <button class="btn btn-sm btn-default time_confirm">确定</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="time_select_quick">
+                                                        <p>Quick Range</p>
+                                                        <ul>
+                                                            <li class="last_two_days"><a>Last 2 days</a></li>
+                                                            <li class="last_seven_days"><a>Last 7 days</a></li>
+                                                            <li class="last_thirty_days"><a>Last 30 days</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="time_select_quick_hours">
+                                                        <ul>
+                                                            <li class="last_five_minutes"><a>Last 5 minutes</a></li>
+                                                            <li class="last_fifteen_minutes"><a>Last 15 minutes</a></li>
+                                                            <li class="last_thirty_minutes"><a>Last 30 minutes</a></li>
+                                                            <li class="last_one_hours"><a>Last 1 hours</a></li>
+                                                            <li class="last_three_hours"><a>Last 3 hours</a></li>
+                                                            <li class="last_six_hours"><a>Last 6 hours</a></li>
+                                                            <li class="last_twelve_hours"><a>Last 12 hours</a></li>
+                                                            <li class="last_days"><a>Last 24 hours</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div style="height: 35px;margin-bottom: 42px;margin-top: 25px;">
+                                        <div class="col-md-2" style="padding: 0">
+                                            <div class="input-group">
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">cluster_name</button>
+                                                </div>
+                                                <!-- /btn-group -->
+                                                <select class="form-control monitor_cluster_name">
+                                                    <option selected="selected">请选择集群</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" style="padding: 0">
+                                            <div class="input-group">
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">host</button>
+                                                </div>
+                                                <!-- /btn-group -->
+                                                <select class="form-control monitor_host">
+                                                    <option selected="selected">请选择host</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" style="padding: 0">
+                                            <div class="input-group">
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">metric</button>
+                                                </div>
+                                                <!-- /btn-group -->
+                                                <select class="form-control selectpicker monitor_metric" data-actions-box="true" data-selected-text-format="count"
+                                                        data-style="custom_selectpiker_bg" data-live-search="true"
+                                                        multiple title="请选择metric" id="monitor_metric">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div id="container" style="min-width:1500px;height:600px"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.tab-content -->
+                    </div>
+                    <!-- nav-tabs-custom -->
+                </div>
+
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- 新增node-->
+    <div class="modal fade" id="modal_add_node" tabindex="-1" role="dialog" aria-labelledby="modal_addnode">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content col-sm-10">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modal_addnode">添加节点</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+
+                    <div class="form-group">
+                        <label for="rtype" class="col-sm-3 control-label">rtype:</label>
+                        <div class="col-sm-6" style="margin-left: 30px">
+                            <select class="form-control" id="rtype" name="rtype">
+                                <option value="">请选择类型</option>
+                                <option value="db" selected="selected">db</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="host" class="col-sm-3 control-label">host:</label>
+                        <div class="col-sm-6" style="margin-left: 30px">
+                            <input type="text" class="form-control" id="host" name="host" placeholder="请填写主机">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dbport" class="col-sm-3 control-label">dbport:</label>
+                        <div class="col-sm-6" style="margin-left: 30px">
+                            <input type="text" class="form-control" id="dbport" name="dbport" placeholder="请填写数据库接口"
+                                   value="3306">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cluster_name" class="col-sm-3 control-label">cluster_name:</label>
+                        <div class="col-sm-6" style="margin-left: 30px">
+                            <input type="text" class="form-control" id="cluster_name" name="cluster_name"
+                                   placeholder="请填写集群名字">
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="apply_node">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--编辑node-->
+    <div class="modal fade" id="modal_edit_node" tabindex="-1" role="dialog" aria-labelledby="modal_editnode">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content col-sm-10">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modal_editnode">编辑节点</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+
+                    <div class="form-group">
+                        <label for="edit_rtype" class="col-sm-3 control-label">rtype:</label>
+                        <div class="col-sm-6" style="margin-left: 30px">
+                            <select class="form-control" id="edit_rtype" name="rtype">
+                                <option value="">请选择类型</option>
+                                <option value="db" selected="selected">db</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_host" class="col-sm-3 control-label">host:</label>
+                        <div class="col-sm-6" style="margin-left: 30px">
+                            <input type="text" class="form-control" id="edit_host" name="host" placeholder="请填写主机">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_dbport" class="col-sm-3 control-label">dbport:</label>
+                        <div class="col-sm-6" style="margin-left: 30px">
+                            <input type="text" class="form-control" id="edit_dbport" name="dbport"
+                                   placeholder="请填写数据库接口" value="3306">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_cluster_name" class="col-sm-3 control-label">cluster_name:</label>
+                        <div class="col-sm-6" style="margin-left: 30px">
+                            <input type="text" class="form-control" id="edit_cluster_name" name="cluster_name"
+                                   placeholder="请填写集群名字">
+                        </div>
+                    </div>
+                    <input type="text" style="display: none" id="edit_role">
+                    <input type="text" style="display: none" id="edit_online">
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="edit_confirm">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--延迟检测配置-->
+    <div class="modal fade" id="modal_replication_delay_config" tabindex="-1" role="dialog" aria-labelledby="modal_replication">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content col-sm-10">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modal_replication">延迟检测配置</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+
+                    <div class="form-group">
+                        <label for="rtype" class="col-sm-2 control-label"></label>
+                        <div class="col-sm-6">
+                            <p>Replication Max Delay:</p>
+                            <div class="current_replication_input">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="check_replication_config">修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--修改密码-->
+    <div class="modal fade" id="modal_change_password" tabindex="-1" role="dialog" aria-labelledby="modal_change_password_title">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content col-sm-10">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modal_change_password_title">修改密码</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+
+                    <div class="form-group">
+                        <label for="original_password" class="col-sm-3 control-label">原来密码:</label>
+                        <div class="col-sm-6" style="margin-left: 30px">
+                            <input type="password" class="form-control" id="original_password" name="original_password" placeholder="请填写原来密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="new_password" class="col-sm-3 control-label">新密码:</label>
+                        <div class="col-sm-6" style="margin-left: 30px">
+                            <input type="password" class="form-control" id="new_password" name="new_password" placeholder="请填写新密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="check_password" class="col-sm-3 control-label">确认密码:</label>
+                        <div class="col-sm-6" style="margin-left: 30px">
+                            <input type="password" class="form-control" id="check_password" name="check_password" placeholder="请确认密码">
+                            <div><label style="color: red;margin-top: 8px;display: none" class="error_check_passwd">两次输入密码不一致</label></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="submit_change_password">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--监控配置-->
+    <div class="modal fade" id="modal_node_monitor_config" tabindex="-1" role="dialog"
+         aria-labelledby="modal_change_password_title">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content col-sm-10">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modal_node_monitor_config_title">单节点监控配置</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <label for="original_password" class="col-sm-3 control-label">监控开关:</label>
+                        <div class="col-sm-6">
+                            <md-switch tabindex="0" type="checkbox" role="checkbox" class="md-checked" >
+                                <div class="md-container" style="touch-action: pan-x;">
+                                    <div class="md-bar"></div>
+                                    <div class="md-thumb-container">
+                                        <div class="md-thumb md-ink-ripple">
+                                            <div class="md-ripple-container"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div  class="md-label">
+                                    <span class="label label-primary show_off_on" role="button" tabindex="0" style="">On</span>
+                                </div>
+                            </md-switch>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="save_days" class="col-sm-3 control-label">保留天数:</label>
+                        <div class="col-sm-6" style="margin-left: 30px">
+                            <input type="text" class="form-control" id="save_days" name="days"
+                                   placeholder="请输入保留天数(1-30整数)">
+                            <div><label style="color: rgba(255,0,0,0.63);margin-top: 8px;display: none" class="error_check_days">请输入保留天数(1-30整数)</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="submit_change_monitor_config">提交确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 3 -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<!-- Bootstrap 3.3.7 -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- Slimscroll -->
+<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<!-- Bootstrap slider -->
+<script src="plugins/seiyria-bootstrap-slider/bootstrap-slider.min.js"></script>
+<!--bootstrap-datepicker-->
+<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+
+<!--新增-->
+<script src="bower_components/sweetalert/sweetalert.min.js"></script>
+
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="plugins/iCheck/icheck.min.js"></script>
+<script src="bower_components/bootstrap_switch/bootstrap-switch.min.js"></script>
+
+<!--chartist-->
+<script src="bower_components/chatist/chartist.min.js"></script>
+<script src="bower_components/chatist/chartist-plugin-fill-donut.min.js"></script>
+<!--high charts-->
+<script src="bower_components/high_charts/highcharts.js"></script>
+<script src="bower_components/high_charts/data.js"></script>
+<script src="bower_components/high_charts/export-data.js"></script>
+<!--bootstrap-select-->
+<script src="bower_components/bootstrap-select-1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+<script src="dist/js/base.js"></script>
+<script src="dbha.js"></script>
+<script src="dist/js/new_page/difference_data.js"></script>
+<script src="dist/js/new_page/dbha_log.js"></script>
+<script src="dist/js/new_page/route.js"></script>
+<script src="dist/js/new_page/change_password.js"></script>
+<script src="dist/js/new_page/monitor_charts.js"></script>
+
+<script>
+    $(document).ready(function () {
+        //change cluster_name
+        $(".cluster_name_list").change(function () {
+            var current_val = $(this).val();
+            var current_clustername_data = {"cluster_name": current_val};
+            dbha_tb_obj.clear();
+            dbha_tb_obj.settings()[0].ajax.data = function (d) {
+                return JSON.stringify(current_clustername_data)
+            };
+            dbha_tb_obj.ajax.url(get_dbha_data_url).load();
+            //获取当前集群监控信息
+            get_monitor_info(get_monitor_info_url, current_clustername_data);
+            //dbha detail
+            //生成dbha detal tb
+            var generate_dbha_detail_tb_url = "dbhadetail";
+            var generate_dbha_detail_tb_data = JSON.stringify(current_clustername_data);
+            generate_dbha_detail_tb(generate_dbha_detail_tb_url, generate_dbha_detail_tb_data);
+
+            setTimeout(function () {
+                monitor_statistics_ajax(monitor_statistics_ajax_url, current_clustername_data);
+            },500);
+
+
+        });
+        //切换dbha
+        $(".toggle_dbha").click(function () {
+            var show_element = $(".dbha_detail").css("display");
+            if(show_element == "none"){
+                $(".dbha_detail").show("slow");
+                $(".dbha_tb_list").hide("slow");
+            }else{
+                $(".dbha_detail").hide("slow");
+                $(".dbha_tb_list").show("slow");
+
+                // $(".thread_running").empty();
+                // $(".thread_connected").empty();
+                setTimeout(function () {
+                    var current_val = $(".cluster_name_list").val();
+                    var current_clustername_data = {"cluster_name": current_val};
+                    monitor_statistics_ajax(monitor_statistics_ajax_url, current_clustername_data);
+                },500)
+            }
+
+        });
+        //用于添加节点
+        $("#apply_node").click(function () {
+
+            var add_node_url = "import"; //用于填写路由
+            var host = $("#host").val();
+            var rtype = $("#rtype").val();
+            var dbport = parseInt($("#dbport").val());
+            var cluster_name = $("#cluster_name").val();
+            sessionStorage.setItem("cluster_name", cluster_name);
+            var data = {
+                "host": host,
+                "dbport": dbport,
+                "rtype": rtype,
+                "cluster_name": cluster_name,
+            };
+            //console.log("data = " + host + "rtype =" + rtype + "dbport=" + dbport + "cluster_name=" + cluster_name);
+            $.ajax({
+                type: "post",
+                url: add_node_url, //填写路由地址
+                contentType: "application/json",
+                data: JSON.stringify(data),
+
+                success: function (e) {
+                    if(e.status == "1" || e.status == 1){
+                        swal("添加节点成功","添加节点成功", "success");
+                        $("#modal_add_node").modal('hide');
+                        var current_val = sessionStorage.getItem("cluster_name");
+                        get_cluster_name_list(get_cluster_list_url, get_cluster_list_data);
+                        $(".cluster_name_list").val(current_val);
+
+                        var current_clustername_data = {"cluster_name": current_val};
+                        dbha_tb_obj.clear();
+                        dbha_tb_obj.settings()[0].ajax.data = function (d) {
+                            return JSON.stringify(current_clustername_data)
+                        };
+                        dbha_tb_obj.ajax.url(get_dbha_data_url).load();
+                        //获取当前集群监控信息
+                        get_monitor_info(get_monitor_info_url, current_clustername_data);
+                        //dbha detail
+                        //生成dbha detal tb
+                        var generate_dbha_detail_tb_url = "dbhadetail";
+                        var generate_dbha_detail_tb_data = JSON.stringify(current_clustername_data);
+                        generate_dbha_detail_tb(generate_dbha_detail_tb_url, generate_dbha_detail_tb_data);
+                    }else{
+                        swal("添加失败", e.err, "error");
+                    }
+                },
+                error: function (error) {
+                    console.log("add node failed");
+                    console.log(error)
+                }
+            });
+        });
+
+        $("body").on('click', '.user-header', function (e) {
+            e.stopPropagation();
+        });
+
+        //time
+        function format_to_time(time_val){
+            // var time_val_ = parseInt(time_val);
+            var date = new Date(time_val);
+            Y = date.getFullYear() + '/';
+            M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '/';
+            D = date.getDate() + ' ';
+
+            var cuurent_time = new Date();
+            h = cuurent_time.getHours() + ':';
+            m = cuurent_time.getMinutes() + ':';
+            s = cuurent_time.getSeconds();
+            var time_new = Y+M+D+h+m+s;
+            return time_new
+        }
+        function format_from_time(time_val){
+            // var time_val_ = parseInt(time_val);
+            var date = new Date(time_val);
+            Y = date.getFullYear() + '/';
+            M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '/';
+            D = date.getDate() + ' ';
+
+            var cuurent_time = new Date();
+            h = cuurent_time.getHours() + ':';
+            m = cuurent_time.getMinutes() + ':';
+            s = cuurent_time.getSeconds();
+            var time_new = Y+M+D+h+m+s;
+
+            var from_date = new Date(time_new);
+            var from_timestamp = from_date.getTime() - 5 * 60 *1000;
+            var new_from_date = new Date(from_timestamp);
+            Y_ = new_from_date.getFullYear() + '/';
+            M_ = (new_from_date.getMonth()+1 < 10 ? '0'+(new_from_date.getMonth()+1) : new_from_date.getMonth()+1) + '/';
+            D_ = new_from_date.getDate() + ' ';
+            h_ = new_from_date.getHours() + ':';
+            m_ = new_from_date.getMinutes() + ':';
+            s_ = new_from_date.getSeconds();
+            var from_time_ = Y_+M_+D_+h_+m_+s_;
+
+
+            return from_time_
+        }
+
+        $(".from_actual_range").datepicker({
+            autoclose: false,
+            todayHighlight: true,
+            format: 'yyyy/mm/dd',
+        });
+        $('.from_actual_range').on('changeDate', function() {
+            var from_time = $('.from_actual_range').datepicker('getUTCDate');
+            if(from_time){
+                var time_new = format_from_time(from_time.valueOf());
+                $('.frmo_actual_datepicker').val(time_new);
+            }
+
+        });
+
+        $(".to_actual_range").datepicker({
+            autoclose: false,
+            todayHighlight: true,
+            format: 'yyyy/mm/dd',
+        });
+        $('.to_actual_range').on('changeDate', function() {
+            if($('.to_actual_range').datepicker('getUTCDate')){
+                var time_new = format_to_time($('.to_actual_range').datepicker('getUTCDate').valueOf());
+                $('.to_actual_datepicker').val(
+                    time_new
+                );
+            }
+
+
+        });
+
+
+
+    })
+        .on("click", ".different_data", function () {
+            click_difference_data_render();
+        })
+        .on("click", ".append_difference_data", function () {
+            // var $data_table = $('#different_sql_tb').DataTable();
+            var id_list = [];
+            var rows = $(".table tr input[type='checkbox']:checked").parent().parent();
+            different_data_tb_obj.rows(rows).every(function () {
+                var tmp_dict = {};
+                tmp_dict["cluster_name"] = this.data().cluster_name;
+                tmp_dict["host"] = this.data().host;
+                tmp_dict["time"] = parseInt(this.data().time);
+                tmp_dict["number"] = parseInt(this.data().number);
+                tmp_dict["sql"] = this.data().current;
+                id_list.push(tmp_dict);
+            });
+            swal({
+                title: "确认追加数据？",
+                text: "确认追加数据？",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "取消",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认追加",
+                closeOnConfirm: false
+            }, function () {
+                var append_data_url = "pushsqlinfo";//填写路由
+                var append_data_data = {
+                    "sql_info": id_list,
+                };
+
+                function append_data_ajax(url, data) {
+                    $.ajax({
+                        url: url,
+                        data: JSON.stringify(data),
+                        type: "post",
+                        contentType: "application/json",
+                        // head: {
+                        //     "X-CSRFToken": getCookie("csrftoken")
+                        // },
+                        success: function (e) {
+                            if (e.status == 1 || e.status == "1") {
+                                swal("追加成功", "追加成功", "success");
+                                $(".checkbox-toggle .fa").removeClass("fa-check-square-o").addClass('fa-square-o');
+                                different_data_tb_obj.clear();
+                                different_data_tb_obj.settings()[0].ajax.data = function (d) {
+                                    return difference_data_data
+                                };
+                                different_data_tb_obj.ajax.url(difference_data_url).load();
+                            } else {
+                                swal("追加失败" + "error: " + e.err, "追加失败", "error");
+                            }
+                        },
+                        error: function (e) {
+                            swal("追加失败,服务器错误", "追加失败,服务器错误", "error");
+
+                        }
+                    });
+                }
+
+                append_data_ajax(append_data_url, append_data_data)
+            });
+        })
+        .on("click", ".checkbox-toggle", function () {
+
+            //var clicks = $(this).data('clicks');
+            var current_check_class = $(".checkbox-toggle .fa").hasClass("fa-check-square-o");
+            if (current_check_class) {
+                //Uncheck all checkboxes
+                $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
+                $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+            } else {
+                //Check all checkboxes
+                $(".mailbox-messages input[type='checkbox']").iCheck("check");
+                $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+            }
+            // $(this).data("clicks", !clicks);
+        })
+        .on("click", ".mark_difference_data", function () {
+            //var $data_table = $('#different_sql_tb').DataTable();
+            var id_list = [];
+            var rows = $(".table tr input[type='checkbox']:checked").parent().parent();
+            different_data_tb_obj.rows(rows).every(function () {
+                var tmp_dict = {};
+                tmp_dict["cluster_name"] = this.data().cluster_name;
+                tmp_dict["host"] = this.data().host;
+                tmp_dict["time"] = parseInt(this.data().time);
+                tmp_dict["number"] = parseInt(this.data().number);
+                id_list.push(tmp_dict);
+            });
+            swal({
+                title: "确认标记这些差异数据？",
+                text: "确认标记这些差异数据？",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "取消",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认标记",
+                closeOnConfirm: false
+            }, function () {
+                var mark_data_url = "marksqlinfo";//填写路由
+                var mark_data_data = {
+                    "sql_info": id_list,
+                };
+
+                function mark_data_ajax(url, data) {
+                    $.ajax({
+                        url: url,
+                        data: JSON.stringify(data),
+                        type: "post",
+                        contentType: "application/json",
+                        // head: {
+                        //     "X-CSRFToken": getCookie("csrftoken")
+                        // },
+                        success: function (e) {
+                            if (e.status == 1 || e.status == "1") {
+                                swal("标记成功", "标记成功", "success");
+                                $(".checkbox-toggle .fa").removeClass("fa-check-square-o").addClass('fa-square-o');
+                                different_data_tb_obj.clear();
+                                different_data_tb_obj.settings()[0].ajax.data = function (d) {
+                                    return difference_data_data
+                                };
+                                different_data_tb_obj.ajax.url(difference_data_url).load();
+                            } else {
+                                swal("标记失败" + "error: " + e.err, "标记失败", "error");
+                            }
+                        },
+                        error: function (e) {
+                            swal("标记失败,服务器错误", "标记失败,服务器错误", "error");
+
+                        }
+                    });
+                }
+
+                mark_data_ajax(mark_data_url, mark_data_data)
+            });
+        })
+
+        .on("click", ".edit_node", function () {
+            var edit_cluster_name = $(this).attr("cluster_name");
+            var edit_host = $(this).attr("host");
+            var edit_dbport = $(this).attr("dbport");
+            var edit_role = $(this).attr("role");
+            var edit_online_tmp = $(this).attr("online");
+            if(edit_online_tmp == "true" || edit_online_tmp == true){
+                var edit_online = true
+            }else{
+                var edit_online = false
+            }
+            //alert("edit_role = " + edit_role + "," + "edit_cluster_name = " + edit_cluster_name + "," + "edit_host = " +edit_host + "," + "edit_dbport = " +edit_dbport + ',' + "edit_online  =" +edit_online);
+            $("#edit_cluster_name").val(edit_cluster_name);
+            $("#edit_dbport").val(edit_dbport);
+            $("#edit_host").val(edit_host);
+            $("#edit_role").val(edit_role);
+            $("#edit_online").val(edit_online);
+
+        })
+        .on("click", "#edit_confirm", function () {
+            var edit_cluster_name = $("#edit_cluster_name").val();
+            sessionStorage.setItem("edit_cluster_name", edit_cluster_name);
+            var edit_dbport = $("#edit_dbport").val();
+            var edit_host = $("#edit_host").val();
+            var edit_role = $("#edit_role").val();
+            var edit_online_tmp = $("#edit_online").val();
+            if(edit_online_tmp == "true" || edit_online_tmp == true){
+                var edit_online = true
+            }else{
+                var edit_online = false
+            }
+            //alert("edit_role = " + edit_role + "," + "edit_cluster_name = " + edit_cluster_name + "," + "edit_host = " +edit_host + "," + "edit_dbport = " +edit_dbport + ',' + "edit_online  =" +edit_online);
+            function edit_node_ajax(url, data) {
+                $.ajax({
+                    url: url,
+                    data: JSON.stringify(data),
+                    type: "post",
+                    contentType: "application/json",
+                    // head: {
+                    //     "X-CSRFToken": getCookie("csrftoken")
+                    // },
+                    success: function (e) {
+                        if (e.status == 1 || e.status == "1") {
+                            swal("编辑成功", "编辑成功", "success");
+                            $("#modal_edit_node").modal('hide');
+                            //获取cluster_name_list
+                            var get_cluster_list_url = "getclusternamelist";
+                            var get_cluster_list_data = {};
+                            get_cluster_name_list(get_cluster_list_url, get_cluster_list_data);
+                            var current_val = sessionStorage.getItem("edit_cluster_name");
+                            $(".cluster_name_list").val(current_val);
+                            var current_clustername_data = {"cluster_name": current_val};
+                            //更新当前集群的node数据
+                            dbha_tb_obj.clear();
+                            dbha_tb_obj.settings()[0].ajax.data = function (d) {
+                                return JSON.stringify(current_clustername_data)
+                            };
+                            dbha_tb_obj.ajax.url(get_dbha_data_url).load();
+                            //获取当前集群监控信息
+                            get_monitor_info(get_monitor_info_url, current_clustername_data);
+                            //dbha detail
+                            //生成dbha detal tb
+                            var generate_dbha_detail_tb_url = "dbhadetail";
+                            var generate_dbha_detail_tb_data = JSON.stringify(current_clustername_data);
+                            generate_dbha_detail_tb(generate_dbha_detail_tb_url, generate_dbha_detail_tb_data);
+                        } else {
+                            swal("编辑失败" + "error: " + e.err, "编辑失败", "error");
+
+                        }
+                    },
+                    error: function (e) {
+                        swal("编辑失败,服务器错误", "编辑失败,服务器错误", "error");
+
+                    }
+                });
+            }
+
+            var edit_url = "editnode"; //填写路由
+            //var edit_url = "./test/add_node.json"; //填写路由
+            var edit_data = {
+                "cluster_name": edit_cluster_name,
+                "dbport": parseInt(edit_dbport),
+                "host": edit_host,
+                "role": edit_role,
+                "online": edit_online,
+            };
+            edit_node_ajax(edit_url, edit_data)
+        })
+        .on("click", ".delete_node", function () {
+            var delete_host = $(this).attr("host");
+            swal({
+                title: "确认删除该节点吗？",
+                text: "确认删除吗？",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "取消",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认删除",
+                closeOnConfirm: false
+            }, function () {
+                var delete_node_url = "deletenode";//填写路由
+                var delete_node_data = {
+                    "host": delete_host,
+                };
+
+                function delete_node_ajax(url, data) {
+                    $.ajax({
+                        url: url,
+                        data: JSON.stringify(data),
+                        type: "post",
+                        contentType: "application/json",
+                        // head: {
+                        //     "X-CSRFToken": getCookie("csrftoken")
+                        // },
+                        success: function (e) {
+                            if (e.status == 1 || e.status == "1") {
+                                swal("删除成功", "删除成功", "success");
+                                setTimeout(function () {
+                                    //获取cluster_name
+                                    var current_val = $(".cluster_name_list").val();
+                                    var current_clustername_data = {"cluster_name": current_val};
+                                    //更新当前集群的node数据
+                                    dbha_tb_obj.clear();
+                                    dbha_tb_obj.settings()[0].ajax.data = function (d) {
+                                        return JSON.stringify(current_clustername_data)
+                                    };
+                                    dbha_tb_obj.ajax.url(get_dbha_data_url).load();
+                                    //获取当前集群监控信息
+                                    //get_monitor_info("./test/change_monitor_data.json", get_monitor_info_data);
+                                    get_monitor_info(get_monitor_info_url, current_clustername_data);
+                                    //dbha detail
+                                    //生成dbha detal tb
+                                    var generate_dbha_detail_tb_url = "dbhadetail";
+                                    var generate_dbha_detail_tb_data = JSON.stringify(current_clustername_data);
+                                    generate_dbha_detail_tb(generate_dbha_detail_tb_url, generate_dbha_detail_tb_data);
+                                }, 2000)
+                            } else {
+                                swal("删除失败" + "error: " + e.err, "删除失败", "error");
+                            }
+                        },
+                        error: function (e) {
+                            swal("删除失败,服务器错误", "删除失败,服务器错误", "error");
+
+                        }
+                    });
+                }
+
+                delete_node_ajax(delete_node_url, delete_node_data)
+            });
+        })
+        .on("click", ".maintain_node", function () {
+            var maintain_host = $(this).attr("host");
+            var maintain_status = $(this).attr("maintain_status");
+            swal({
+                title: "确认维护节点吗？",
+                text: "确认维护节点吗？",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "取消",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认维护",
+                closeOnConfirm: false
+            }, function () {
+                function maintain_node_url_ajax(url, data) {
+                    $.ajax({
+                        url: url,
+                        data: JSON.stringify(data),
+                        type: "post",
+                        contentType: "application/json",
+                        // head: {
+                        //     "X-CSRFToken": getCookie("csrftoken")
+                        // },
+                        success: function (e) {
+                            if (e.status == 1 || e.status == "1") {
+                                swal("维护成功", "维护成功", "success");
+                                setTimeout(function () {
+                                    //获取cluster_name
+                                    var current_val = $(".cluster_name_list").val();
+                                    var current_clustername_data = {"cluster_name": current_val};
+                                    //更新当前集群的node数据
+                                    dbha_tb_obj.clear();
+                                    dbha_tb_obj.settings()[0].ajax.data = function (d) {
+                                        return JSON.stringify(current_clustername_data)
+                                    };
+                                    //dbha_tb_obj.ajax.url("./test/change_dbha.json").load();
+                                    dbha_tb_obj.ajax.url(get_dbha_data_url).load();
+                                    //获取当前集群监控信息
+                                    //get_monitor_info("./test/change_monitor_data.json", get_monitor_info_data);
+                                    get_monitor_info(get_monitor_info_url, current_clustername_data);
+                                    //dbha detail
+                                    //生成dbha detal tb
+                                    //var generate_dbha_detail_tb_url = "./test/change_dbha.json";
+                                    var generate_dbha_detail_tb_url = "dbhadetail";
+                                    var generate_dbha_detail_tb_data = JSON.stringify(current_clustername_data);
+                                    generate_dbha_detail_tb(generate_dbha_detail_tb_url, generate_dbha_detail_tb_data);
+                                }, 2000);
+                            } else {
+                                swal("维护失败" + "error: " + e.err, "维护失败", "error");
+
+                            }
+                        },
+                        error: function (e) {
+                            swal("维护失败,服务器错误", "维护失败,服务器错误", "error");
+                        }
+                    });
+                }
+
+                var maintain_node_url = "setmaintain"; //填写路由
+                //var maintain_node_url = "./test/add_node.json"; //填写路由
+                var maintain_node_data = {
+                    "host": maintain_host,
+                    "maintain": maintain_status,
+                };
+
+                maintain_node_url_ajax(maintain_node_url, maintain_node_data)
+
+
+
+            });
+        })
+        .on("click", ".master_slave_switch", function () {
+            var switch_host = $(this).attr("host");
+            swal({
+                title: "确认进行主从切换吗？",
+                text: "确认进行主从切换吗？",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "取消",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认切换",
+                closeOnConfirm: false
+            }, function () {
+                function switch_node(url, data) {
+                    $.ajax({
+                        url: url,
+                        data: JSON.stringify(data),
+                        type: "post",
+                        contentType: "application/json",
+                        // head: {
+                        //     "X-CSRFToken": getCookie("csrftoken")
+                        // },
+                        success: function (e) {
+                            if (e.status == 1 || e.status == "1") {
+                                swal("主从切换成功", "主从切换成功", "success");
+                                setTimeout(function () {
+                                    //获取cluster_name
+                                    var current_val = $(".cluster_name_list").val();
+                                    var current_clustername_data = {"cluster_name": current_val};
+                                    //更新当前集群的node数据
+                                    dbha_tb_obj.clear();
+                                    dbha_tb_obj.settings()[0].ajax.data = function (d) {
+                                        return JSON.stringify(current_clustername_data)
+                                    };
+                                    //dbha_tb_obj.ajax.url("./test/change_dbha.json").load();
+                                    dbha_tb_obj.ajax.url(get_dbha_data_url).load();
+                                    //获取当前集群监控信息
+                                    //get_monitor_info("./test/change_monitor_data.json", get_monitor_info_data);
+                                    get_monitor_info(get_monitor_info_url, current_clustername_data);
+                                    //dbha detail
+                                    //生成dbha detal tb
+                                    //var generate_dbha_detail_tb_url = "./test/change_dbha.json";
+                                    var generate_dbha_detail_tb_url = "dbhadetail";
+                                    var generate_dbha_detail_tb_data = JSON.stringify(current_clustername_data);
+                                    generate_dbha_detail_tb(generate_dbha_detail_tb_url, generate_dbha_detail_tb_data);
+                                }, 2000)
+                            } else {
+                                swal("主从切换失败" + "error: " + e.err, "主从切换失败", "error");
+                            }
+
+                        },
+                        error: function (e) {
+                            swal("主从切换失败,服务器错误", "主从切换失败", "error");
+                        }
+                    });
+                }
+                var switch_node_url = "switch"; //填写路由
+                //var switch_node_url = "./test/add_node.json"; //填写路由
+                var switch_node_data = {
+                    "host": switch_host,
+                };
+                switch_node(switch_node_url, switch_node_data);
+            });
+        })
+        .on("click", ".refresh_data", function () {
+            //获取cluster_name
+            var current_val = $(".cluster_name_list").val();
+            var current_clustername_data = {"cluster_name": current_val};
+            //更新当前集群的node数据
+            dbha_tb_obj.clear();
+            dbha_tb_obj.settings()[0].ajax.data = function (d) {
+                return JSON.stringify(current_clustername_data)
+            };
+            //dbha_tb_obj.ajax.url("./test/change_dbha.json").load();
+            dbha_tb_obj.ajax.url(get_dbha_data_url).load();
+            //获取当前集群监控信息
+            //get_monitor_info("./test/change_monitor_data.json", get_monitor_info_data);
+            get_monitor_info(get_monitor_info_url, current_clustername_data);
+            //dbha detail
+            //生成dbha detal tb
+            //var generate_dbha_detail_tb_url = "./test/change_dbha.json";
+            var generate_dbha_detail_tb_url = "dbhadetail";
+            var generate_dbha_detail_tb_data = JSON.stringify(current_clustername_data);
+            generate_dbha_detail_tb(generate_dbha_detail_tb_url, generate_dbha_detail_tb_data);
+
+            setTimeout(function () {
+                monitor_statistics_ajax(monitor_statistics_ajax_url, current_clustername_data);
+            },500);
+
+
+        })
+        .on("click", ".custom_search_differen_data", function () {
+            var current_cluster_name = $(".cluster_name_list").val();
+            $("#dbha").removeClass("active");
+            $(".dbha").removeClass("active");
+            $("#different_data").addClass("active");
+            $(".different_data").addClass("active");
+            click_difference_data_render();
+            different_data_tb_obj.search(current_cluster_name).draw();
+        })
+        .on("click", "md-switch", function () {
+            var isbgcolor = $("md-switch .md-bar").css("background-color");
+            if(isbgcolor == "rgba(255, 64, 129, 0.5)"){
+                $("md-switch .md-bar").css("background-color", "rgb(158, 158, 158)")
+                $("md-switch .md-thumb").css("background-color", "rgb(250, 250, 250)")
+                $("md-switch .md-thumb").css("left", -15);
+                $(".show_off_on").text("Off")
+            }else{
+                $("md-switch .md-bar").css("background-color","rgba(255, 64, 129, 0.5)")
+                $("md-switch .md-thumb").css("background-color", "rgb(255, 64, 129)")
+                $("md-switch .md-thumb").css("left", 0)
+                $(".show_off_on").text("On")
+            }
+        })
+        .on("click", ".monitor_config_node", function () {
+            var host = $(this).attr("host");
+            var get_monitorsetting_url = "getmonitorsetting";
+            var get_monitorsetting_data = {
+                "host": host,
+            };
+            get_monitorconfig_ajax(get_monitorsetting_url, get_monitorsetting_data);
+        })
+        .on("click", "#submit_change_monitor_config", function () {
+            var monitor = "";
+            var change_days = $("#save_days").val();
+            var isbgcolor = $("md-switch .md-bar").css("background-color");
+            if(isbgcolor == "rgba(255, 64, 129, 0.5)"){
+                monitor = true;
+            }else{
+                monitor = false;
+            }
+            var host = $(this).attr("host");
+            var monitor_setting_data = {
+                "host": host,
+                "monitor": monitor,
+                "days": parseInt(change_days),
+            };
+            var monitor_setting_url = "monitorsetting";
+            var isdayslegal = check_days(change_days.toString());
+            if(isdayslegal){
+                $(".error_check_days").hide();
+                update_monitor_setting_ajax(monitor_setting_url, monitor_setting_data);
+            }else{
+                $(".error_check_days").show();
+            }
+
+
+        })
+        //修复bug
+        .on("click", ".dbha", function () {
+            $(".thread_running").empty();
+            $(".thread_connected").empty();
+            setTimeout(function () {
+                var current_val = $(".cluster_name_list").val();
+                var current_clustername_data = {"cluster_name": current_val};
+                monitor_statistics_ajax(monitor_statistics_ajax_url, current_clustername_data);
+            }, 500)
+        })
+
+        .on("click", ".check_replication_val", function () {
+            var check_replication_val_url = "getslavedealysetting";
+            var current_route_cluster_name = $(".route_cluster_name_list").val();
+            var check_replication_val_data = {"cluster_name": current_route_cluster_name};
+            $.ajax({
+                url: check_replication_val_url,
+                data: JSON.stringify(check_replication_val_data),
+                //async: false,
+                type: "post",
+                contentType: "application/json",
+                success: function (e) {
+                    if(e.status == 3 || e.status == "3"){
+                        var $current_replication_input = $(".current_replication_input");
+                        $current_replication_input.empty();
+                        var tmp_input = "<input id=\"replication_max_delay_val\" type=\"text\" data-slider-value="+ e["value"]["delay"] +" class=\"slider form-control\" data-slider-min=\"0\" data-slider-max=\"500\"\n" +
+                            "                                   data-slider-step=\"1\" data-slider-orientation=\"horizontal\"\n" +
+                            "                                   data-slider-selection=\"before\" data-slider-tooltip=\"show\" data-slider-id=\"aqua\">";
+                        $current_replication_input.append(tmp_input);
+                        $('.slider').slider({tooltip: 'always',tooltip_position:'bottom'});
+                    }else{
+                        swal("获取replication max delay值错误", e.err, "error")
+                    }
+                },
+                error: function (e) {
+                    swal("获取replication max delay值错误", "服务器错误", "error")
+                }
+
+
+            })
+        })
+        .on("click", "#check_replication_config", function () {
+            var current_replications_delay_obj = $('#replication_max_delay_val').slider({
+                formatter: function(value) {
+                    return parseInt(value);
+                }
+            });
+            var current_replications_delay_val = parseInt(current_replications_delay_obj.val());
+            var current_route_cluster_name = $(".route_cluster_name_list").val();
+            var replication_max_delay_url = "slavedelaysetting";
+            var replication_max_delay_data = {"cluster_name": current_route_cluster_name, "delay": current_replications_delay_val};
+            swal({
+                title: "确认修改replication max delay 的值吗？",
+                text: "确认修改replication max delay 的值吗？",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "取消",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认修改",
+                closeOnConfirm: false
+            },function(){
+                $.ajax({
+                    url: replication_max_delay_url,
+                    data: JSON.stringify(replication_max_delay_data),
+                    async: false,
+                    type: "post",
+                    contentType: "application/json",
+                    success: function (e) {
+                        if(e.status == 1 || e.status == "1"){
+                            $("#modal_replication_delay_config").modal('hide');
+                            swal("设置replication max delay值成功","","success");
+                        }else{
+                            swal("设置replication max delay值失败","","error");
+                        }
+                    },
+                    error: function (e) {
+                        swal("设置replication max delay值失败","服务器错误","error");
+                    }
+
+
+                })
+            });
+
+        })
+
+        .on("click", ".dbha_log", function () {
+            click_dbha_log_render();
+        })
+
+        .on("click", ".custom_light_bulb_true", function (e) {
+            var difference_data_cluster_name = $(this).attr("cluster_name");
+            //sessionStorage.setItem("difference_data_cluster_name", difference_data_cluster_name);
+            window.location.href="differencedata.html?cluster_name=" + difference_data_cluster_name
+
+        })
+
+        .on("click", ".sign_out", function () {
+            var current_username = $(".current_username").text();
+            var signout_data = {"user_name": current_username};
+            swal({
+                title: "确认退出吗?",
+                text: "确认退出吗",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "取消",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    url: "loginout",
+                    data: JSON.stringify(signout_data),
+                    async: false,
+                    type: "post",
+                    contentType: "application/json",
+                    success: function (e) {
+                        if(e.status == 1 || e.status == "1"){
+                            swal("请稍候", "正在退出中。。。请稍候", "success");
+                            setTimeout(function () {
+                                window.location.href = "login.html"
+                            }, 1800);
+
+                        }else{
+                            swal("退出失败","退出失败","error");
+                        }
+                    },
+                    error: function (e) {
+                        swal("退出失败","服务器错误","error");
+                    }
+
+
+                });
+            })
+        })
+
+        .on("click", ".time_click_button",function () {
+            toogle_time_button();
+        })
+        .on("click", ".from_actual_range_button",function () {
+            $(".from_actual_range").toggle()
+        })
+        .on("click", ".to_actual_range_button",function () {
+            $(".to_actual_range").toggle()
+        })
+        .on("click", ".time_confirm", function () {
+            var from_time = $('.frmo_actual_datepicker').val();
+            var to_time = $('.to_actual_datepicker').val();
+            if(to_time && from_time){
+                $(".time_button_text").text(from_time + "...");
+                $(".time_show_titie").attr("title", from_time + "\n" + "                 to" + "\n" + to_time);
+                var new_to_data = new Date(to_time);
+                var new_from_data = new Date(from_time);
+                var from_timestamp = new_from_data.getTime();
+                var to_timestamp = new_to_data.getTime();
+                var metric = $(".monitor_metric").selectpicker("val");
+                var host = $(".monitor_host").val();
+                var data = {
+                    "host": host,
+                    "metric": metric,
+                    "start_time": from_timestamp,
+                    "stop_time": to_timestamp
+                };
+                var get_monitor_charts_list_data_url = "monitormetricvalue";
+                get_monitor_charts_list_data(get_monitor_charts_list_data_url, data);
+
+                toogle_time_button();
+
+
+
+            }
+
+        })
+        .on("click", ".monitor_charts_refresh", function () {
+            var url = "monitormetricvalue";
+            var metric = $("#monitor_metric").selectpicker("val");
+            var host = $(".monitor_host").val();
+            var monitor_time_humannize = get_time();
+            var data = {
+                "host": host,
+                "metric": metric,
+                "start_time": monitor_time_humannize[0],
+                "stop_time": monitor_time_humannize[1]
+            };
+            get_monitor_charts_list_data(url, data);
+
+        })
+
+
+
+</script>
+
+</body>
+</html>
